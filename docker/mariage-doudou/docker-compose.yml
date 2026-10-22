@@ -1,0 +1,24 @@
+services:
+  mariage-doudou:
+    build: .
+    container_name: mariage-doudou
+    restart: unless-stopped
+    environment:
+      RSVP_DATABASE: /data/rsvps.sqlite3
+      UPLOAD_FOLDER: /uploads
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+    volumes:
+      - ./data:/data
+      - /srv/photos/mariagedoudou:/uploads
+    expose:
+      - "8080"
+    networks:
+      npm:
+        aliases:
+          - mariage-doudou
+
+networks:
+  npm:
+    external: true
+    name: npm_default

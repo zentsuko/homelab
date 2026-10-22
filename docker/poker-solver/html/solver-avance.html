@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Solver Pro - Mode Hiérarchie Officielle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-solver-avance">
+
+    <div class="page-topbar">
+        <a href="index.html" class="nav-back-button">← Accueil</a>
+    </div>
+
+    <h1>Poker Solver Pro — <span style="color:#8e44ad; font-size:0.7em;">Solver Avancé & Auras</span></h1>
+    
+    <div class="advanced-header header-controls">
+        <div class="control-group">
+            <label for="stack-select">Profondeur de Tapis</label>
+            <select id="stack-select">
+                <option value="DEEP">Deep Stack (100bb+) - Standard</option>
+                <option value="MID">Mid Stack (40bb) - Tournoi</option>
+                <option value="SHORT">Short Stack (20bb) - Survie</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="street-select">Street (Rue)</label>
+            <select id="street-select">
+                <option value="FLOP">Flop (3 premières cartes)</option>
+                <option value="TURN">Turn (4ème carte)</option>
+                <option value="RIVER">River (5ème carte - Abattage)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="position-select">Position postflop</label>
+            <select id="position-select">
+                <option value="IP">En Position (IP) - Parle en dernier</option>
+                <option value="OOP">Hors Position (OOP) - Parle en premier</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="advanced-grid" id="poker-grid"></div>
+
+    <div id="scenarios-section">
+        <h2 class="section-title" id="selected-hand-title">Main sélectionnée : --</h2>
+        <div class="cards" id="scenario-cards"></div>
+        <div id="advice-panel"></div>
+    </div>
+
+    <script src="solver-avance.js"></script>
+    <script src="auth-config.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

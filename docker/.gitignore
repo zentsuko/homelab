@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environnements virtuels
+venv/
+.env
+.env.*
+
+# Docker
+**/app/instance/
+**/app/instance/*
+*.db
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
+
+# Autres fichiers sensibles
+*.bak
+*.swp
+.DS_Store
+
+# Node/npm éventuel
+node_modules/
+
+# Ne jamais versionner les secrets !
+
+# Fichiers de config sensibles (permissions, données)
+npm/letsencrypt/
+adguard/work/
+adguard/conf/
+bazarr/
+seerr/
+radarr/
+sonarr/
+qbittorrent/
+prowlarr/
+

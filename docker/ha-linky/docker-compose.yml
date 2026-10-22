@@ -1,0 +1,12 @@
+services:
+  ha-linky:
+    image: ha-linky:latest
+    container_name: ha-linky
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      TZ: Europe/Paris
+      WS_URL: ws://192.168.1.99:8123/api/websocket
+    volumes:
+      - ./:/data

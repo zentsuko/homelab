@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3ed">
+  <title>Inès & Clément — 11 septembre 2027</title>
+  <style>
+    :root { color-scheme: light; --ink: #302b27; --muted: #6c6259; --accent: #9a6a4f; --paper: #fbf8f2; }
+    * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: Georgia, "Times New Roman", serif; }
+    a { color: inherit; }
+    .hero { min-height: 82vh; display: grid; place-items: center; padding: 4rem 1.25rem; text-align: center; background: radial-gradient(ellipse at 50% 25%, #fffdf8, transparent 68%), linear-gradient(145deg, #e5d4c5, #d7e0d4 58%, #f1e8d9); }
+    .hero-inner { max-width: 760px; }
+    .eyebrow { letter-spacing: .24em; text-transform: uppercase; font: 600 .75rem/1.5 Arial, sans-serif; color: var(--accent); }
+    h1 { margin: .8rem 0; font-size: clamp(3.4rem, 10vw, 6.6rem); line-height: .95; font-weight: 500; }
+    .amp { color: var(--accent); font-style: italic; }
+    .date { margin: 1.5rem 0; font: 600 1.05rem/1.5 Arial, sans-serif; letter-spacing: .08em; }
+    .intro { max-width: 540px; margin: 1.2rem auto 2rem; color: var(--muted); font: 1.1rem/1.7 Arial, sans-serif; }
+    .button { display: inline-block; padding: .9rem 1.3rem; border: 1px solid var(--accent); border-radius: 999px; background: var(--accent); color: white; font: 600 .92rem Arial, sans-serif; text-decoration: none; }
+    .button.secondary { background: transparent; color: var(--accent); }
+    nav { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; padding: 1rem; background: var(--paper); font: .85rem Arial, sans-serif; }
+    nav a { text-decoration: none; }
+    main { width: min(100% - 2rem, 900px); margin: auto; }
+    section { padding: 4.5rem 0; border-bottom: 1px solid #e7ded4; text-align: center; }
+    h2 { margin: 0 0 1rem; font-size: clamp(2rem, 6vw, 3rem); font-weight: 500; }
+    .lead { color: var(--muted); font: 1rem/1.7 Arial, sans-serif; }
+    .details { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .detail { padding: 1.4rem; border-radius: 1rem; background: #f1ebe2; }
+    .detail h3 { margin: 0 0 .6rem; color: var(--accent); font: 600 .8rem Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    .detail p { margin: .3rem 0; font: 1rem/1.6 Arial, sans-serif; }
+    form { width: min(100%, 560px); margin: 2rem auto 0; text-align: left; font-family: Arial, sans-serif; }
+    label { display: block; margin: 1rem 0 .4rem; font-size: .92rem; font-weight: 600; }
+    input, select, textarea { width: 100%; padding: .8rem; border: 1px solid #cfc3b7; border-radius: .5rem; background: white; color: var(--ink); font: 1rem Arial, sans-serif; }
+    fieldset { min-width: 0; }
+    legend { padding: 0 .5rem; color: var(--accent); font-weight: 700; }
+    form .button { width: 100%; margin-top: 1.3rem; cursor: pointer; }
+    #rsvp-status { min-height: 1.5rem; margin-top: 1rem; text-align: center; font: .95rem/1.5 Arial, sans-serif; }
+    footer { padding: 2rem 1rem; color: var(--muted); text-align: center; font: .85rem Arial, sans-serif; }
+    @media (max-width: 560px) { .hero { min-height: 75vh; } nav { gap: .8rem; } section { padding: 3.5rem 0; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Nous nous marions</div>
+      <h1>Inès <span class="amp">&</span><br>Clément</h1>
+      <p class="date">11 SEPTEMBRE 2027</p>
+      <p class="intro">Nous serions très heureux de partager cette belle journée avec vous. Retrouvez ici les informations pratiques et confirmez votre présence.</p>
+      <a class="button" href="#rsvp">Répondre à l’invitation</a>
+    </div>
+  </header>
+
+  <nav aria-label="Navigation principale">
+    <a href="#journee">La journée</a>
+    <a href="#infos">Infos pratiques</a>
+    <a href="#rsvp">RSVP</a>
+    <a href="/photos">Partager des photos</a>
+  </nav>
+
+  <main>
+    <section id="journee">
+      <div class="eyebrow">À vos agendas</div>
+      <h2>Le grand jour</h2>
+      <p class="lead">Samedi 11 septembre 2027</p>
+      <div class="details">
+        <article class="detail"><h3>18 h 30</h3><p>Pot d’accueil</p></article>
+        <article class="detail"><h3>18 h 45</h3><p>Début de la cérémonie laïque</p></article>
+        <article class="detail"><h3>19 h 15</h3><p>Début des festivités</p></article>
+      </div>
+    </section>
+
+    <section id="infos">
+      <div class="eyebrow">Pour nous retrouver</div>
+      <h2>Infos pratiques</h2>
+      <div class="details">
+        <article class="detail">
+          <h3>Le lieu</h3>
+          <p>Musée de la Fête Foraine</p>
+          <p>136 rue Félix Faure<br>59350 Saint-André-lez-Lille</p>
+          <p><a href="https://maps.google.com/?q=136+Rue+F%C3%A9lix+Faure+59350+Saint-Andr%C3%A9-lez-Lille" target="_blank" rel="noopener noreferrer">Voir l’itinéraire</a></p>
+        </article>
+        <article class="detail">
+          <h3>Tenue</h3>
+          <p>Tenue de fête, comme vous vous sentez bien.</p>
+          <p>Petite demande : pas de robe blanche, s’il vous plaît.</p>
+        </article>
+        <article class="detail">
+          <h3>Stationnement</h3>
+          <p>Un grand parking gratuit d’environ 500 à 600 places est disponible à proximité, notamment au 208 rue Sadi Carnot.</p>
+        </article>
+        <article class="detail">
+          <h3>Une question ?</h3>
+          <p>Contactez Inès Berquin ou Clément François.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="rsvp">
+      <div class="eyebrow">Votre réponse</div>
+      <h2>Serez-vous des nôtres ?</h2>
+      <p class="lead">Merci de répondre individuellement pour chaque personne invitée, avant le <strong>11 mai 2027</strong>.</p>
+      <form id="rsvp-form">
+        <div id="guest-list"></div>
+        <button class="button secondary" id="add-guest" type="button">Ajouter une personne</button>
+        <button class="button" type="submit">Envoyer ma réponse</button>
+        <p id="rsvp-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section>
+      <div class="eyebrow">Un souvenir à partager</div>
+      <h2>Vos photos de la journée</h2>
+      <p class="lead">Vous pourrez ajouter vos photos après la fête.</p>
+      <a class="button secondary" href="/photos">Accéder à l’espace photos</a>
+    </section>
+  </main>
+
+  <footer>Avec toute notre affection — Inès & Clément</footer>
+  <script>
+    const form = document.getElementById("rsvp-form");
+    const guestList = document.getElementById("guest-list");
+    const addGuestButton = document.getElementById("add-guest");
+    const status = document.getElementById("rsvp-status");
+
+    function addGuestCard() {
+      const index = guestList.children.length + 1;
+      const card = document.createElement("fieldset");
+      card.className = "detail";
+      card.style.margin = "1rem 0";
+      card.innerHTML = `
+        <legend>Invité ${index}</legend>
+        <label>Nom et prénom
+          <input class="guest-name" maxlength="200" autocomplete="name" required>
+        </label>
+        <label>Présence
+          <select class="guest-attending" required>
+            <option value="">Choisissez une réponse</option>
+            <option value="yes">Oui, avec plaisir !</option>
+            <option value="no">Désolé, nous ne pourrons pas venir</option>
+          </select>
+        </label>
+        <label class="dietary-wrap" hidden>Allergies ou régime alimentaire
+          <textarea class="guest-dietary" maxlength="500" rows="3" placeholder="Indiquez les allergies ou le régime, ou « Aucun »"></textarea>
+        </label>
+        <button class="button secondary remove-guest" type="button">Retirer cette personne</button>
+      `;
+      const attending = card.querySelector(".guest-attending");
+      const dietaryWrap = card.querySelector(".dietary-wrap");
+      const dietary = card.querySelector(".guest-dietary");
+      attending.addEventListener("change", () => {
+        dietaryWrap.hidden = attending.value !== "yes";
+        if (attending.value !== "yes") dietary.value = "";
+      });
+      card.querySelector(".remove-guest").addEventListener("click", () => {
+        if (guestList.children.length === 1) {
+          status.textContent = "Il faut garder au moins une personne dans le formulaire.";
+          return;
+        }
+        card.remove();
+        [...guestList.children].forEach((guestCard, guestIndex) => {
+          guestCard.querySelector("legend").textContent = `Invité ${guestIndex + 1}`;
+        });
+        addGuestButton.disabled = guestList.children.length >= 10;
+      });
+      guestList.append(card);
+      addGuestButton.disabled = guestList.children.length >= 10;
+    }
+
+    addGuestButton.addEventListener("click", addGuestCard);
+    addGuestCard();
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "Envoi de votre réponse…";
+      const data = {
+        guests: [...guestList.children].map((card) => ({
+          name: card.querySelector(".guest-name").value,
+          attending: card.querySelector(".guest-attending").value === "yes",
+          dietary_requirements: card.querySelector(".guest-dietary").value
+        }))
+      };
+      try {
+        const response = await fetch("/rsvp", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Une erreur est survenue.");
+        form.reset();
+        guestList.replaceChildren();
+        addGuestCard();
+        status.textContent = `Merci, les réponses de ${result.guests_saved} invité(s) ont bien été enregistrées !`;
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+  </script>
+</body>
+</html>

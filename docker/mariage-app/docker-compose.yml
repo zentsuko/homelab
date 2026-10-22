@@ -1,0 +1,9 @@
+services:
+  mariage-upload:
+    build: .
+    container_name: mariage-upload
+    ports:
+      - "8085:8080"
+    volumes:
+      - /srv/photos/mariage/Alex&Mel:/uploads
+    restart: unless-stopped

@@ -1,0 +1,27 @@
+services:
+  ark:
+    image: hermsi/ark-server:latest
+    container_name: ark-server
+    restart: unless-stopped
+
+    stop_grace_period: 5m
+
+    volumes:
+      - ./server:/app
+
+    environment:
+      SESSION_NAME: ${SESSION_NAME}
+      SERVER_MAP: ${SERVER_MAP}
+      SERVER_PASSWORD: ${SERVER_PASSWORD}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      MAX_PLAYERS: ${MAX_PLAYERS}
+      UPDATE_ON_START: ${UPDATE_ON_START}
+      PRE_UPDATE_BACKUP: ${PRE_UPDATE_BACKUP}
+      BACKUP_ON_STOP: ${BACKUP_ON_STOP}
+      ARK_EXTRA_OPTS: "-crossplay -NoBattlEye"
+
+    ports:
+      - "7777:7777/udp"
+      - "7778:7778/udp"
+      - "27015:27015/udp"
+      - "27020:27020/tcp"

@@ -1,0 +1,18 @@
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /opt/tempo-rte/tempo.db:/tempo.db:ro
+
+      # Stockage hôte — lecture seule
+      - /srv/media:/srv/media:ro
+      - /srv/media.disk0:/srv/media.disk0:ro
+      - /srv/disk1:/srv/disk1:ro
+      - /srv/disk2:/srv/disk2:ro
+      - /srv/photos:/srv/photos:ro
+
+    restart: unless-stopped
+    network_mode: host

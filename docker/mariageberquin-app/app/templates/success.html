@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Merci pour votre envoi</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:'Inter',sans-serif;
+background-image:url('/static/background.jpg');
+background-size:cover;
+background-position:center;
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+position:relative;
+}
+
+body::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(rgba(35,45,38,0.45),rgba(20,25,20,0.35));
+}
+
+.card{
+position:relative;
+z-index:1;
+width:min(96%,760px);
+background:rgba(255,248,242,0.18);
+backdrop-filter:blur(12px);
+border-radius:28px;
+padding:38px 28px 34px;
+text-align:center;
+color:white;
+box-shadow:0 20px 50px rgba(0,0,0,0.25);
+border:1px solid rgba(255,255,255,0.2);
+}
+
+h1{
+margin:0 0 10px;
+font-family:'Cormorant Garamond',serif;
+font-size:44px;
+}
+
+.subtitle{
+margin:0 0 24px;
+font-size:16px;
+opacity:0.95;
+line-height:1.5;
+}
+
+.album{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:18px;
+margin-top:20px;
+}
+
+.polaroid{
+background:white;
+padding:10px 10px 22px;
+border-radius:4px;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+width:150px;
+transform:rotate(var(--r));
+transition:0.25s;
+}
+
+.polaroid:hover{
+transform:rotate(0deg) scale(1.05);
+z-index:5;
+}
+
+.polaroid img{
+width:100%;
+display:block;
+border-radius:2px;
+}
+
+.actions{
+margin-top:28px;
+}
+
+.button{
+display:inline-block;
+padding:16px 22px;
+border-radius:18px;
+background:linear-gradient(135deg,#d7b37a,#b98d52);
+color:white;
+font-weight:600;
+text-decoration:none;
+box-shadow:0 10px 25px rgba(0,0,0,0.25);
+}
+
+.small{
+margin-top:18px;
+font-size:14px;
+opacity:0.9;
+}
+
+@media(max-width:600px){
+
+.polaroid{
+width:120px;
+}
+
+h1{
+font-size:36px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<h1>Merci ❤️</h1>
+
+<p class="subtitle">
+Vos souvenirs ont bien été envoyés.<br>
+Voici les fichiers que vous venez de partager.
+</p>
+
+<div class="album">
+
+{% for file in files %}
+<div class="polaroid" style="--r: {{ (-6 + loop.index*2) }}deg;">
+{% if file.endswith(('.mp4', '.mov', '.mkv', '.avi', '.webm', '.m4v')) %}
+<video controls preload="metadata" style="width:100%;height:100%;object-fit:cover;">
+  <source src="/uploads/{{ file }}">
+</video>
+{% else %}
+<img src="/uploads/{{ file }}">
+{% endif %}
+</div>
+{% endfor %}
+
+</div>
+
+<div class="actions">
+<a class="button" href="/">Envoyer d'autres souvenirs</a>
+</div>
+
+<div class="small">
+La famille vargas découvrira vos souvenirs avec grand plaisir ✨
+</div>
+
+</div>
+
+</body>
+</html>

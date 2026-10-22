@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Solver Pro - Connexion</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-login">
+
+    <div class="login-card">
+        <h1>Poker Solver Pro</h1>
+        <p class="login-subtitle">Connecte-toi pour acceder aux outils</p>
+
+        <label for="login-email">Email</label>
+        <input id="login-email" type="email" placeholder="exemple@mail.com" autocomplete="email">
+
+        <label for="login-password">Mot de passe</label>
+        <input id="login-password" type="password" placeholder="Mot de passe" autocomplete="current-password">
+
+        <div class="login-actions">
+            <button class="auth-btn" id="login-email-btn">Se connecter</button>
+            <button class="auth-btn" id="signup-email-btn">Creer un compte</button>
+        </div>
+
+        <div class="auth-message" id="login-message"></div>
+    </div>
+
+    <script src="auth-config.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

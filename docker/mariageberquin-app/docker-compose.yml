@@ -1,0 +1,9 @@
+services:
+  mariageberquin-upload:
+    build: .
+    container_name: mariageberquin-upload
+    ports:
+      - "8086:8080"
+    volumes:
+      - /srv/photos/mariage/berquin:/uploads
+    restart: unless-stopped

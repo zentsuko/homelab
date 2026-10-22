@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Trainer — Modern GTO</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-trainer">
+
+    <div class="page-topbar">
+        <a href="index.html" class="nav-back-button">← Accueil</a>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <span class="fire">🔥 <span id="streak-counter">0</span></span>
+        <span class="difficulty-badge difficulty-medium" id="difficulty-badge">Difficulte: Moyen</span>
+        <button class="stats-toggle" id="btn-stats" aria-label="Voir les statistiques">📈 Stats</button>
+    </div>
+
+    <!-- Table Area -->
+    <div class="table-area">
+        <div class="table-ring">
+            
+            <!-- Table Seats (Dynamic) -->
+            <div class="node node-seat node-top node-fold">
+                <span class="node-pos">UTG</span>
+                <span class="node-status">FOLD</span>
+            </div>
+            <div class="node node-seat node-mtr node-fold">
+                <span class="node-pos">MP</span>
+                <span class="node-status">FOLD</span>
+            </div>
+            <div class="node node-seat node-tr node-fold">
+                <span class="node-pos">HJ</span>
+                <span class="node-status">FOLD</span>
+            </div>
+            <div class="node node-seat node-br node-fold">
+                <span class="node-pos">CO</span>
+                <span class="node-status">FOLD</span>
+            </div>
+            <div class="node node-seat node-bl node-fold">
+                <span class="node-pos">SB</span>
+                <span class="node-status">FOLD</span>
+            </div>
+            <div class="node node-seat node-tl node-fold">
+                <span class="node-pos">BB</span>
+                <span class="node-status">FOLD</span>
+            </div>
+
+            <!-- Villain Action -->
+            <div class="villain-action-box">
+                <div class="villain-pos-tag" id="ui-villain-pos">BB</div>
+                <div class="villain-action-text" id="ui-villain-action-type">CHECK</div>
+                <div class="villain-action-amt" id="ui-villain-action-amt"></div>
+            </div>
+
+            <!-- Hero Node -->
+            <div class="node hero">
+                <div class="dealer-btn" id="ui-dealer" style="display:none;">D</div>
+                <span id="ui-hero-pos">BTN</span>
+                <span class="stack" id="ui-hero-stack">97.5</span>
+            </div>
+
+            <!-- Center Info & Board -->
+            <div class="center-info">
+                <div class="sit-text" id="ui-sit-text">BTN vs BB, SRP</div>
+                <div class="hand-history" id="ui-hand-history"></div>
+                <div class="pot-text" id="ui-pot-text">POT: 5.5 BB</div>
+                <div class="hero-legend" id="ui-hero-legend">Vous jouez en BTN - Tapis: 97.5 blindes</div>
+                <div class="board-cards" id="ui-board"></div>
+            </div>
+
+            <!-- Hero Cards -->
+            <div class="hero-cards" id="ui-hero-cards"></div>
+
+        </div>
+    </div>
+
+    <!-- Action Controls -->
+    <div class="controls-area">
+        <div class="actions-grid">
+            <button class="btn-action btn-raise" id="btn-raise" >RAISE</button>
+            <button class="btn-action btn-fold" id="btn-fold" >FOLD</button>
+            <button class="btn-action btn-call" id="btn-call" >CALL</button>
+            <button class="btn-action btn-check" id="btn-check" >CHECK</button>
+        </div>
+    </div>
+
+    <!-- Feedback Overlay -->
+    <div id="feedback-overlay">
+        <div id="feedback-container">
+            <div class="feedback-title" id="feedback-title">Correct!</div>
+            <div class="feedback-text" id="feedback-text">Explanation</div>
+            <button id="btn-next" class="btn-next">NEXT HAND</button>
+        </div>
+    </div>
+
+    <div id="stats-modal" class="stats-modal hidden" aria-hidden="true">
+        <div class="stats-card">
+            <div class="stats-head">
+                <h3>Statistiques Trainer</h3>
+                <button id="stats-close" class="stats-close" aria-label="Fermer">✕</button>
+            </div>
+            <div class="stats-summary" id="stats-summary">Aucune main jouee pour le moment.</div>
+            <div class="stats-block">
+                <h4>Par street</h4>
+                <div class="stats-list" id="stats-street"></div>
+            </div>
+            <div class="stats-block">
+                <h4>Par action optimale</h4>
+                <div class="stats-list" id="stats-action"></div>
+            </div>
+            <div class="stats-block">
+                <h4>Par type de spot adverse</h4>
+                <div class="stats-list" id="stats-spot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARGEMENT DE LA BASE DE DONNÉES -->
+    <script src="scenarios.js"></script>
+
+    <script src="trainer.js"></script>
+    <script src="auth-config.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

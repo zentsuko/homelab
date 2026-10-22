@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Poker Clock & Manager</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #0b0f19;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+    
+    /* PANNEAU GAUCHE (Horloge) */
+    #left-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4vh 4vw;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+    .badge {
+      background: #1e293b;
+      padding: 8px 20px;
+      border-radius: 999px;
+      color: #38bdf8;
+    }
+    .reentry-badge { background: #14532d; color: #4ade80; }
+    .reentry-closed { background: #7f1d1d; color: #f87171; }
+    
+    main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex-grow: 1;
+      justify-content: center;
+    }
+    #timer {
+      font-size: 20vw;
+      font-weight: 800;
+      line-height: 0.9;
+      font-variant-numeric: tabular-nums;
+      color: #f8fafc;
+      letter-spacing: -3px;
+    }
+    .blinds-card {
+      display: flex;
+      gap: 4vw;
+      margin-top: 2vh;
+      background: #111827;
+      padding: 20px 50px;
+      border-radius: 20px;
+      border: 2px solid #1f2937;
+    }
+    .blinds-val { font-size: 4vw; font-weight: 700; color: #fbbf24; }
+    .ante-val { font-size: 4vw; font-weight: 700; color: #38bdf8; }
+    .sub-info { margin-top: 2vh; font-size: 1.5rem; color: #64748b; }
+    
+    /* Barre horizontale des jetons sous le chrono */
+    .chip-legend-horizontal {
+      display: flex;
+      justify-content: center;
+      gap: 1.5vw;
+      margin-top: 4vh;
+    }
+    .chip-item-h {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #111827;
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #cbd5e1;
+    }
+    .chip-color {
+      width: 18px; 
+      height: 18px; 
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,0.3), 0 0 2px #000;
+    }
+    .bg-white { background: #f8fafc; box-shadow: inset 0 0 0 3px #cbd5e1, 0 0 2px #000; }
+    .bg-green { background: #22c55e; }
+    .bg-red   { background: #ef4444; }
+    .bg-blue  { background: #3b82f6; }
+    .bg-black { background: #0f172a; border: 1px solid #475569; }
+    .chip-val-h { color: #fbbf24; font-weight: 800; font-size: 1.2rem; margin-left: 4px; }
+
+    footer {
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      justify-content: center;
+    }
+    button.control-btn {
+      background: #1e293b;
+      border: 1px solid #334155;
+      color: #ffffff;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    button.control-btn:hover { background: #334155; }
+    button#btn-toggle { background: #2563eb; border-color: #3b82f6; width: 200px; }
+    button#btn-toggle:hover { background: #1d4ed8; }
+
+    /* PANNEAU DROITE (Sidebar Tournoi) */
+    #right-panel {
+      width: 380px;
+      background: #111827;
+      border-left: 2px solid #1f2937;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      overflow-y: auto;
+    }
+    .sidebar-title {
+      font-size: 1.4rem; font-weight: 700; color: #f8fafc; text-align: center; margin-bottom: 0px;
+    }
+    .stat-box {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; }
+    .stat-label { color: #94a3b8; font-weight: 600; font-size: 0.9rem; }
+    .stat-value { color: #f8fafc; font-weight: 700; font-size: 1.1rem; }
+    .highlight-gold { color: #fbbf24; font-size: 1.3rem; }
+    .highlight-green { color: #4ade80; font-size: 1.2rem; }
+
+    /* Liste des joueurs */
+    .player-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #334155;
+    }
+    .player-row:last-child { border-bottom: none; }
+    .player-info { display: flex; flex-direction: column; }
+    .player-name { font-weight: 600; font-size: 1.1rem; color: #f8fafc; transition: 0.2s; }
+    .player-name.busted { text-decoration: line-through; color: #64748b; }
+    .player-reentries { font-size: 0.75rem; color: #fbbf24; font-weight: 700; margin-top: 2px;}
+    
+    .player-actions { display: flex; gap: 8px; }
+    .btn-action {
+      padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: none; cursor: pointer; font-weight: 700;
+    }
+    .btn-reentry { background: #14532d; color: #4ade80; }
+    .btn-reentry:disabled { background: transparent; border: 1px solid #334155; color: #475569; cursor: not-allowed; }
+    .btn-bust { background: #7f1d1d; color: #f87171; }
+    .btn-bust.is-busted { background: #334155; color: #94a3b8; }
+
+  </style>
+</head>
+<body>
+
+  <!-- PANNEAU GAUCHE -->
+  <div id="left-panel">
+    <header>
+      <div><span class="badge" id="lvl-badge">NIVEAU 1</span></div>
+      <div id="reentry-status" class="badge reentry-badge">RE-ENTRY OUVERT</div>
+    </header>
+
+    <main>
+      <div id="timer">20:00</div>
+      <div class="blinds-card">
+        <div class="blinds-val" id="blinds">100 / 200</div>
+        <div class="ante-val" id="ante">ANTE 200</div>
+      </div>
+      <div class="sub-info" id="next-level">Suivant : 200 / 400 (ante 400) - 20 min</div>
+      
+      <!-- LÉGENDE JETONS HORIZONTALE -->
+      <div class="chip-legend-horizontal">
+        <div class="chip-item-h"><div class="chip-color bg-white"></div> Blanc = <span class="chip-val-h">100</span></div>
+        <div class="chip-item-h"><div class="chip-color bg-green"></div> Vert = <span class="chip-val-h">200</span></div>
+        <div class="chip-item-h"><div class="chip-color bg-red"></div> Rouge = <span class="chip-val-h">500</span></div>
+        <div class="chip-item-h"><div class="chip-color bg-blue"></div> Bleu = <span class="chip-val-h">1 000</span></div>
+        <div class="chip-item-h"><div class="chip-color bg-black"></div> Noir = <span class="chip-val-h">5 000</span></div>
+      </div>
+    </main>
+
+    <footer>
+      <button class="control-btn" onclick="prevLevel()">« Précédent</button>
+      <button class="control-btn" id="btn-toggle" onclick="toggleTimer()">Démarrer</button>
+      <button class="control-btn" onclick="nextLevel()">Suivant »</button>
+      <button class="control-btn" onclick="resetCurrentLevel()">Reset Round</button>
+    </footer>
+  </div>
+
+  <!-- PANNEAU DROITE (Manager) -->
+  <div id="right-panel">
+    <div class="sidebar-title">Doudou's Home Poker</div>
+    
+    <!-- Statistiques globales -->
+    <div class="stat-box">
+      <div class="stat-row">
+        <span class="stat-label">Joueurs en lice</span>
+        <span class="stat-value" id="stat-players">8 / 8</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Moyenne (Average)</span>
+        <span class="stat-value highlight-gold" id="stat-avg">20 000</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Total Jetons</span>
+        <span class="stat-value" id="stat-chips">160 000</span>
+      </div>
+    </div>
+
+    <!-- Prize Pool -->
+    <div class="stat-box">
+      <div class="stat-row">
+        <span class="stat-label">PRIZE POOL</span>
+        <span class="stat-value highlight-green" id="stat-prizepool">120 €</span>
+      </div>
+      <hr style="border: 0; border-top: 1px solid #334155; margin: 2px 0;">
+      <div class="stat-row">
+        <span class="stat-label">1er (50%)</span>
+        <span class="stat-value" id="pay-1">60 €</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">2e (30%)</span>
+        <span class="stat-value" id="pay-2">36 €</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">3e (20%)</span>
+        <span class="stat-value" id="pay-3">24 €</span>
+      </div>
+    </div>
+
+    <!-- Liste des Joueurs -->
+    <div class="stat-box" id="player-list-container">
+      <!-- Généré par JavaScript -->
+    </div>
+  </div>
+
+  <script>
+    const STRUCTURE = [
+      { lvl: 1,  min: 20, sb: 100,   bb: 200,   ante: 200 },
+      { lvl: 2,  min: 20, sb: 200,   bb: 400,   ante: 400 },
+      { lvl: 3,  min: 20, sb: 300,   bb: 600,   ante: 600 },
+      { lvl: 4,  min: 20, sb: 400,   bb: 800,   ante: 800 },
+      { lvl: 5,  min: 20, sb: 500,   bb: 1000,  ante: 1000 },
+      { lvl: 6,  min: 15, sb: 700,   bb: 1400,  ante: 1400 },
+      { lvl: 7,  min: 15, sb: 1000,  bb: 2000,  ante: 2000 },
+      { lvl: 8,  min: 15, sb: 1500,  bb: 3000,  ante: 3000 },
+      { lvl: 9,  min: 15, sb: 2000,  bb: 4000,  ante: 4000 },
+      { lvl: 10, min: 15, sb: 2500,  bb: 5000,  ante: 5000 },
+      { lvl: 11, min: 15, sb: 3500,  bb: 7000,  ante: 7000 },
+      { lvl: 12, min: 15, sb: 5000,  bb: 10000, ante: 10000 },
+      { lvl: 13, min: 15, sb: 7000,  bb: 14000, ante: 14000 },
+      { lvl: 14, min: 15, sb: 10000, bb: 20000, ante: 20000 },
+      { lvl: 15, min: 15, sb: 15000, bb: 30000, ante: 30000 },
+      { lvl: 16, min: 15, sb: 20000, bb: 40000, ante: 40000 }
+    ];
+
+    const START_STACK = 20000;
+    const REENTRY_STACK = 15000;
+    const BUY_IN = 15;
+
+    let players = [
+      { name: "Clement", active: true, reentries: 0 },
+      { name: "Ines", active: true, reentries: 0 },
+      { name: "Vianney", active: true, reentries: 0 },
+      { name: "Maxence", active: true, reentries: 0 },
+      { name: "Laurent", active: true, reentries: 0 },
+      { name: "Antoine", active: true, reentries: 0 },
+      { name: "Corentin", active: true, reentries: 0 },
+      { name: "Jonathan", active: true, reentries: 0 }
+    ];
+
+    let currentIdx = 0;
+    let secondsLeft = STRUCTURE[0].min * 60;
+    let timerId = null;
+
+    function playBeep(duration = 1.0, freq = 880) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + duration);
+      } catch (e) { console.error("Audio bloqué", e); }
+    }
+
+    function formatNumber(num) {
+      return num.toLocaleString('fr-FR');
+    }
+
+    function renderSidebar() {
+      const activeCount = players.filter(p => p.active).length;
+      const totalReentries = players.reduce((sum, p) => sum + p.reentries, 0);
+      const totalChips = (players.length * START_STACK) + (totalReentries * REENTRY_STACK);
+      const avgStack = activeCount > 0 ? Math.floor(totalChips / activeCount) : 0;
+      
+      const totalPrize = (players.length * BUY_IN) + (totalReentries * BUY_IN);
+
+      document.getElementById('stat-players').textContent = `${activeCount} / ${players.length}`;
+      document.getElementById('stat-avg').textContent = formatNumber(avgStack);
+      document.getElementById('stat-chips').textContent = formatNumber(totalChips);
+      document.getElementById('stat-prizepool').textContent = `${totalPrize} €`;
+      
+      document.getElementById('pay-1').textContent = `${Math.floor(totalPrize * 0.50)} €`;
+      document.getElementById('pay-2').textContent = `${Math.floor(totalPrize * 0.30)} €`;
+      document.getElementById('pay-3').textContent = `${Math.floor(totalPrize * 0.20)} €`;
+
+      const listContainer = document.getElementById('player-list-container');
+      listContainer.innerHTML = '';
+      
+      const reentriesOpen = currentIdx < 5; 
+
+      players.forEach((p, idx) => {
+        const row = document.createElement('div');
+        row.className = 'player-row';
+        
+        const nameClass = p.active ? 'player-name' : 'player-name busted';
+        const bustBtnClass = p.active ? 'btn-action btn-bust' : 'btn-action btn-bust is-busted';
+        const bustBtnText = p.active ? 'Bust 💀' : 'In 🟢';
+        
+        const reentryText = p.reentries > 0 ? `<div class="player-reentries">${p.reentries} Recave(s)</div>` : '';
+
+        row.innerHTML = `
+          <div class="player-info">
+            <div class="${nameClass}">${p.name}</div>
+            ${reentryText}
+          </div>
+          <div class="player-actions">
+            <button class="btn-action btn-reentry" onclick="addReentry(${idx})" ${!reentriesOpen ? 'disabled' : ''}>+ Recave</button>
+            <button class="${bustBtnClass}" onclick="toggleBust(${idx})">${bustBtnText}</button>
+          </div>
+        `;
+        listContainer.appendChild(row);
+      });
+    }
+
+    window.toggleBust = function(idx) {
+      players[idx].active = !players[idx].active;
+      renderSidebar();
+    };
+
+    window.addReentry = function(idx) {
+      if (currentIdx < 5) {
+        players[idx].reentries++;
+        players[idx].active = true; 
+        renderSidebar();
+      }
+    };
+
+    function updateDisplay() {
+      const cur = STRUCTURE[currentIdx];
+      const m = Math.floor(secondsLeft / 60).toString().padStart(2, '0');
+      const s = (secondsLeft % 60).toString().padStart(2, '0');
+      
+      document.getElementById('timer').textContent = `${m}:${s}`;
+      document.getElementById('lvl-badge').textContent = `NIVEAU ${cur.lvl}`;
+      document.getElementById('blinds').textContent = `${formatNumber(cur.sb)} / ${formatNumber(cur.bb)}`;
+      document.getElementById('ante').textContent = `ANTE ${formatNumber(cur.ante)}`;
+
+      const badge = document.getElementById('reentry-status');
+      if (cur.lvl <= 5) {
+        badge.className = "badge reentry-badge";
+        badge.textContent = "RE-ENTRY OUVERT (15 €)";
+      } else {
+        badge.className = "badge reentry-closed";
+        badge.textContent = "RE-ENTRIES CLOS";
+      }
+
+      const nxt = STRUCTURE[currentIdx + 1];
+      const nextEl = document.getElementById('next-level');
+      if (nxt) {
+        nextEl.textContent = `Suivant : ${formatNumber(nxt.sb)} / ${formatNumber(nxt.bb)} (ante ${formatNumber(nxt.ante)}) - ${nxt.min} min`;
+      } else {
+        nextEl.textContent = "Dernier niveau programmé";
+      }
+
+      renderSidebar();
+    }
+
+    function toggleTimer() {
+      const btn = document.getElementById('btn-toggle');
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+        btn.textContent = "Démarrer";
+        btn.style.background = "#2563eb";
+      } else {
+        timerId = setInterval(() => {
+          if (secondsLeft > 0) {
+            secondsLeft--;
+            updateDisplay();
+            if (secondsLeft <= 5 && secondsLeft > 0) {
+              playBeep(0.2, 880); 
+            } else if (secondsLeft === 0) {
+              playBeep(1.0, 1046);
+              nextLevel();
+            }
+          }
+        }, 1000);
+        btn.textContent = "Pause";
+        btn.style.background = "#dc2626";
+      }
+    }
+
+    function nextLevel() {
+      if (currentIdx < STRUCTURE.length - 1) {
+        currentIdx++;
+        secondsLeft = STRUCTURE[currentIdx].min * 60;
+        updateDisplay();
+      }
+    }
+
+    function prevLevel() {
+      if (currentIdx > 0) {
+        currentIdx--;
+        secondsLeft = STRUCTURE[currentIdx].min * 60;
+        updateDisplay();
+      }
+    }
+
+    function resetCurrentLevel() {
+      secondsLeft = STRUCTURE[currentIdx].min * 60;
+      updateDisplay();
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.code === "Space" && e.target.tagName !== "BUTTON") {
+        e.preventDefault();
+        toggleTimer();
+      } else if (e.code === "ArrowRight") {
+        nextLevel();
+      } else if (e.code === "ArrowLeft") {
+        prevLevel();
+      }
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>

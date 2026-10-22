@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réponses RSVP — Inès & Clément</title>
+  <style>
+    body { margin: 0; padding: 2rem 1rem; color: #302b27; background: #fbf8f2; font: 1rem Arial, sans-serif; }
+    main { max-width: 1000px; margin: auto; }
+    h1 { font: 500 2.5rem Georgia, serif; }
+    a { color: #86583f; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: white; }
+    th, td { padding: .8rem; border-bottom: 1px solid #e7ded4; text-align: left; }
+    th { color: #86583f; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Réponses RSVP</h1>
+    <p>{{ guests|length }} réponse(s) individuelle(s) reçue(s). <a href="/admin/rsvps.csv">Télécharger le CSV</a></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Invité</th><th>Présence</th><th>Allergies / régime</th><th>Réponse reçue</th></tr></thead>
+        <tbody>
+          {% for guest in guests %}
+          <tr>
+            <td>{{ guest.guest_name }}</td>
+            <td>{{ "Oui" if guest.attending else "Non" }}</td>
+            <td>{{ guest.dietary_requirements or "Aucun indiqué" }}</td>
+            <td>{{ guest.created_at }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="4">Aucune réponse pour le moment.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poker Solver Pro - Basique</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-solver-basique">
+
+    <div class="page-topbar">
+        <a href="index.html" class="nav-back-button">← Accueil</a>
+    </div>
+
+    <h1>Poker Solver Pro <span style="color:#4fc3f7; font-size:0.5em; font-weight:normal;">— Basique (Preflop)</span></h1>
+
+    <div class="solver-header header-controls">
+        <div class="control-group">
+            <label for="format-select">Format de la table</label>
+            <select id="format-select">
+                <option value="8">8-Max (Full Ring)</option>
+                <option value="7">7-Max</option>
+                <option value="6">6-Max (Shorthanded)</option>
+                <option value="5">5-Max</option>
+                <option value="4">4-Max</option>
+                <option value="3">3-Max</option>
+                <option value="2">2-Max (Heads-Up)</option>
+            </select>
+        </div>
+        
+        <div class="control-group">
+            <label for="situation-select">Situation (Action avant vous)</label>
+            <select id="situation-select">
+                <option value="rfi">Premier à parler (Open / RFI)</option>
+                <option value="vs_open">Face à une relance (Défense / 3-Bet)</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="stack-select">Profondeur de Tapis</label>
+            <select id="stack-select">
+                <option value="deep">Deep Stack (100bb+) - Standard</option>
+                <option value="mid">Mid Stack (40bb) - Broadways</option>
+                <option value="short">Short Stack (20bb) - Standard (peu de push)</option>
+                <option value="micro">Micro Stack (10bb) - Push & All-in</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="controls" id="position-buttons"></div>
+
+    <div class="stats-bar">
+        <div id="range-percentage">Mains jouées : 0.00%</div>
+        <div id="combo-count"><span>0 / 1326 Combos</span></div>
+    </div>
+
+    <div id="scenario-note" style="display:none; width:100%; max-width:600px; background:#3a2f00; border:1px solid #7a6400; color:#ffd966; padding:10px 15px; border-radius:6px; margin-bottom:10px; font-size:13px; text-align:center;"></div>
+
+    <div class="grid-container" id="poker-grid"></div>
+
+    <div class="legend">
+        <div class="legend-item"><div class="color-box" style="background: var(--raise-color);"></div> Open (2-Bet)</div>
+        <div class="legend-item"><div class="color-box" style="background: var(--threebet-color);"></div> 3-Bet</div>
+        <div class="legend-item"><div class="color-box" style="background: var(--push-color);"></div> Push (All-in)</div>
+        <div class="legend-item"><div class="color-box" style="background: var(--call-color);"></div> Call (Défense)</div>
+        <div class="legend-item"><div class="color-box" style="background: var(--check-color);"></div> Check (BB vs Limp)</div>
+        <div class="legend-item"><div class="color-box" style="background: var(--fold-color);"></div> Fold</div>
+    </div>
+
+    <script src="solver-basique.js"></script>
+    <script src="auth-config.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+</html>

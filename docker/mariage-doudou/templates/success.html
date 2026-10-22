@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Merci — Inès & Clément</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; padding: 1rem; display: grid; place-items: center; color: #302b27; background: linear-gradient(145deg, #e5d4c5, #d7e0d4 58%, #f1e8d9); font-family: Arial, sans-serif; }
+    main { width: min(100%, 760px); padding: clamp(1.4rem, 5vw, 2.7rem); border-radius: 1.5rem; background: rgba(255, 253, 248, .94); box-shadow: 0 18px 50px #302b2725; text-align: center; }
+    h1 { font: 500 clamp(2.4rem, 8vw, 3.6rem) Georgia, serif; }
+    .album { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+    .album img { width: min(100%, 180px); max-height: 220px; object-fit: cover; border: 8px solid white; box-shadow: 0 5px 18px #302b2730; }
+    a { display: inline-block; margin-top: 1.5rem; color: #86583f; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Merci ❤️</h1>
+    <p>Vos photos ont bien été envoyées. Merci de partager ces beaux souvenirs avec nous !</p>
+    <div class="album">
+      {% for file in files %}
+      <img src="/photos/uploads/{{ file }}" alt="Photo envoyée">
+      {% endfor %}
+    </div>
+    <a href="/photos">Envoyer d’autres photos</a><br>
+    <a href="/">Retour au site du mariage</a>
+  </main>
+</body>
+</html>

@@ -1,0 +1,23 @@
+services:
+  valheim:
+    image: ghcr.io/community-valheim-tools/valheim-server:latest
+    container_name: valheim
+    restart: unless-stopped
+
+    stop_grace_period: 120s
+
+    ports:
+      - "2456-2457:2456-2457/udp"
+
+    volumes:
+      - ./data:/opt/valheim
+      - ./config:/config
+
+    env_file:
+      - .env
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "20m"
+        max-file: "5"
